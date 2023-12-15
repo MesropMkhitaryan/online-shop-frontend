@@ -1,0 +1,36 @@
+<div class="popup justify-content-center" xmlns="http://www.w3.org/1999/html">
+    <div class="popup-content col-sm-6">
+      <!-- Your popup content goes here -->
+      <h2>Add Product</h2>
+      <form #addProduct = "ngForm" (ngSubmit)="onAddProduct(addProduct.value)">
+        <fieldset>
+          <input type="text" placeholder="Enter your full name" name="title" required ngModel />
+          <input type="number" min="0" name="price" required ngModel />
+          <input type="number" name="quantity" required ngModel />
+          <textarea placeholder="Enter description for product" name="description" ngModel required></textarea>
+          <select name="categoryId" class="custom-select"  id="category" required ngModel>
+            <option selected disabled >Select Category</option>
+            <option *ngFor="let category of categoryList" [value]="category.id">{{category.title}}</option>
+          </select>
+       <div class="col-sm-12" style="display: flex; margin-top: 1rem">
+        <div class="col-sm-6">
+          <input  type="file" name="photo" id="imageInput" (change)="onFileSelected($event)" required>
+        </div>
+          <div  class="image-preview image" *ngIf="imageUrl">
+            <img [src]="imageUrl" style="width: 200px; height: 150px" alt="Image preview">
+            <button (click)="removeImage()" class="remove-image-button">
+              x
+            </button>
+          </div>
+       </div>
+          <div>
+            <button style="margin-right: 10px" class="option2" [disabled]="addProduct.invalid">Submit</button>
+            <button (click)="closePopup()" class="option2">Close</button>
+          </div>
+
+        </fieldset>
+      </form>
+      <!-- Add more content as needed -->
+    </div>
+  </div>
+

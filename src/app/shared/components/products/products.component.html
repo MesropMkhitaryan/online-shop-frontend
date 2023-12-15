@@ -1,0 +1,35 @@
+<div class="box">
+    <div class="option_container">
+        <div class="options">
+            <button *ngIf="!isCreator && !isLoggedIn" style="display: inline-block; padding: 8px 15px;border-radius: 30px;
+                width: 165px;text-align: center;-webkit-transition: all .3s;
+                transition: all .3s;margin: 5px 0;"
+                    (click)="onAddBucket(product?.id)" class="option1">
+                Add To Bucket
+            </button>
+            <button *ngIf="isCreator && !isLoggedIn" style="display: inline-block; padding: 8px 15px;border-radius: 30px;width: 165px;text-align: center;-webkit-transition: all .3s;transition: all .3s;margin: 5px 0;"
+                    (click)="onProductDelete(product?.id)" class="option1">
+                Delete Product
+            </button>
+            <a *ngIf="!isCreator" style="cursor: pointer" (click)="goToSinglePage(product?.id)" class="option2">
+                See More
+            </a>
+            <a *ngIf="isCreator && !isLoggedIn" style="cursor: pointer" [routerLink]="['/edit', product?.id]" class="option2">
+                Update Product
+            </a>
+        </div>
+    </div>
+    <div class="img-box">
+        <a (click)="goToSinglePage(product?.id)">
+            <img style="width: 269px" [src]="imageUrl + product?.photo" alt="">
+        </a>
+    </div>
+    <div class="detail-box">
+        <h5>
+            {{product?.title}}
+        </h5>
+        <h6>
+            {{product?.price}}
+        </h6>
+    </div>
+</div>

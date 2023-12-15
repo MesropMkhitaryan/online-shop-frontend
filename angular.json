@@ -22,12 +22,27 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/template",
+              "src/assets/js/jquery-3.4.1.min.js",
+              "src/assets/js/popper.min.js",
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/custom.js"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/app/shared/styles/css/bootstrap.css",
+              "src/app/shared/styles/css/responsive.css",
+              "src/app/shared/styles/css/style.scss",
+              "src/app/shared/styles/css/style.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/jquery-3.4.1.min.js",
+              "src/assets/js/popper.min.js",
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/custom.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
