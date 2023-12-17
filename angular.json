@@ -31,10 +31,10 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/app/shared/styles/css/bootstrap.css",
-              "src/app/shared/styles/css/responsive.css",
-              "src/app/shared/styles/css/style.scss",
-              "src/app/shared/styles/css/style.css",
+              "src/assets/styles/css/bootstrap.css",
+              "src/assets/styles/css/responsive.css",
+              "src/assets/styles/css/style.scss",
+              "src/assets/styles/css/style.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [

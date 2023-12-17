@@ -1,0 +1,43 @@
+<main style="display: flex" class="container my-4">
+  <div class="mx-4 my-4 d-flex" style="background: #f8f8f8; border-radius: 15px; width: 800px" >
+  <!-- Left Column / Headphones Image -->
+  <div class="left-column my-4 mx-4">
+    <img style="width: 500px; height: 500px; border: 5px solid #555;" [src]="imageUrl+product.photo" alt="">
+  </div>
+
+
+  <!-- Right Column -->
+  <div class="right-column mx-4 my-4">
+
+    <!-- Product Description -->
+    <div class="product-description">
+      <h1>{{product.title}}</h1>
+      <div style="max-width: 300px" >
+        <p>{{product.description}}</p>
+      </div>
+    </div>
+    <div class="product-price d-flex">
+      <button  class="btn-dark btn" id="minus-button" style="width: 28px; justify-content: center; align-items: center; display: flex; border-radius: 4px" (click)="minusQuantity(product)">-</button>
+      <input class ="mx-2" autocomplete="off" style="border: none; background: #f8f8f8; width: 22px;"
+             readonly id="quantity-input" value="1" [max] = "product.quantity">
+      <button class="btn-dark btn" id="plus-button" style="width: 28px; justify-content: center;
+      align-items: center;
+       display: flex; border-radius: 4px"
+              (click)="addQuantity(product)">+</button>
+    </div>
+    <input id="price-input" class="priceInput" hidden readonly value="{{product.price}}">
+
+  </div>
+  </div>
+  <div *ngIf="isLoggedIn" class="col-sm-4 my-4" style="background: #f8f8f8; margin-left: 2rem; border-radius: 15px; height: 200px">
+    <div class="my-3">
+      <p class="b-top__total line">
+        <span style="font-size: 35px">Total-</span>
+        <span style="font-size: 35px" id="total-price">{{priceSum}}</span>
+      </p>
+    </div>
+    <div class="my-3">
+      <button class="btn-primary btn" (click)="orderProduct()">Order</button>
+    </div>
+  </div>
+</main>

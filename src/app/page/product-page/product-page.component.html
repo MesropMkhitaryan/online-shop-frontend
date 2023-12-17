@@ -1,0 +1,30 @@
+<section class="inner_page_head">
+  <div class="container_fuild">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <h3>Product Grid</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="product_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>
+        Your <span>products</span>
+      </h2>
+      <button style="display: inline-block; padding: 8px 15px;border-radius: 30px;
+                width: 165px;text-align: center;-webkit-transition: all .3s;
+                transition: all .3s;margin: 5px 0; background: #f7444e; color: white" class="option2" (click)="openPopup()">Add Product</button>
+    </div>
+    <div class="row">
+      <ng-container *ngFor="let product of productList">
+        <app-products class="col-sm-6 col-md-4 col-lg-4" [product]="product"></app-products>
+      </ng-container>
+    </div>
+  </div>
+</section>
+<app-add-product *ngIf="isPopupOpen" (close)="closePopup()">
+</app-add-product>

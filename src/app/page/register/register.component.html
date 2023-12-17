@@ -1,0 +1,50 @@
+  <section style="background-color: silver" class="why_section layout_padding">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <div class="full">
+            <form [formGroup]="form"  (ngSubmit)="onRegister(form.value)" id="registerForm">
+                <input type="text" placeholder="Enter your name" formControlName="firstName" id="name"/>
+                <div class="alert alert-danger" *ngIf='firstName.touched && firstName.invalid'>
+                  <div *ngIf="firstName.errors?.required">
+                    FirstName is required
+                  </div>
+                  <div *ngIf="firstName.errors?.min">
+                    FirstName must contain at least 3 character
+                  </div>
+                </div>
+                <input type="text" placeholder="Enter your surname" formControlName="lastName"  />
+                <div class="alert alert-danger" *ngIf='lastName.touched && lastName.invalid'>
+                  <div *ngIf="lastName.errors?.required">
+                    LastName is required
+                  </div>
+                  <div *ngIf="lastName.errors?.min">
+                    LastName must contain at least 3 character
+                  </div>
+                </div>
+                <input type="email"  placeholder="Enter your email address" formControlName="email"/>
+                <div class="alert alert-danger" *ngIf='email.touched && email.invalid'>
+                  <div *ngIf="email.errors?.email">
+                    Email is not in right form
+                  </div>
+                  <div *ngIf="email.errors?.required">
+                    Email is required
+                  </div>
+                </div>
+                <input type="password"  placeholder="Enter password" formControlName="password"/>
+                <div class="alert alert-danger" *ngIf='password.touched && password.invalid'>
+                  <div *ngIf="password.errors?.minLength">
+                    Password should have at least 4 characters
+                  </div>
+                  <div *ngIf="password.errors?.required">
+                    Password is required
+                  </div>
+                </div>
+              <input type="submit" [disabled]="form.invalid"  value="Register"/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

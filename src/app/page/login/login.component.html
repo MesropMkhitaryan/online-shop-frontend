@@ -1,0 +1,32 @@
+<section style="background-color: silver" class="why_section layout_padding">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="full">
+          <form [formGroup]="form"  (ngSubmit)="onLogin(form.value)" id="registerForm">
+            <input type="text" placeholder="Enter your email" formControlName="email"/>
+            <div class="alert alert-danger" *ngIf='email.touched && email.invalid'>
+              <div *ngIf="email.errors?.email">
+                Email is not in right form
+              </div>
+              <div *ngIf="email.errors?.required">
+                Email is required
+              </div>
+            </div>
+            <input type="text" placeholder="Enter your password" formControlName="password"/>
+            <div class="alert alert-danger" *ngIf='password.touched && password.invalid'>
+              <div *ngIf="password.errors?.min">
+                Password should have at least 4 characters
+              </div>
+              <div *ngIf="password.errors?.required">
+                Password is required
+              </div>
+            </div>
+            <input type="submit" value="Login"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

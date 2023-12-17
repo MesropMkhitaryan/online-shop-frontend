@@ -1,33 +1,30 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {ProductService} from "./service/product.service";
-import {ProductResponse} from "./model/productResponse";
+import {ProductService} from "./core/service/product.service";
+import {ProductResponse} from "./core/model/productResponse";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {HeaderComponent} from "./shared/components/header/header.component";
-import {ProductsComponent} from "./shared/components/products/products.component";
-import {FooterComponent} from "./shared/components/footer/footer.component";
-import {TokenService} from "./service/token.service";
+import {HeaderComponent} from "./core/shared/layout/header/header.component";
+import {ProductsComponent} from "./core/shared/components/products/products.component";
+import {FooterComponent} from "./core/shared/layout/footer/footer.component";
+import {TokenService} from "./core/service/token.service";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet, HttpClientModule, RouterLink, RouterLinkActive, HeaderComponent, ProductsComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrl: './app.component.css',
   providers: [ProductService, HttpClient]
 })
 export class AppComponent implements OnInit {
   title = 'online-shop-frontend';
-  public productList: ProductResponse[] = []
   imageUrl = "assets/images/slider-bg.jpg"
-  jsFile = "app/shared/js/bootstrap.js"
 
-  constructor(private tokenService: TokenService) {
+  constructor() {
   }
 
   ngOnInit(): void {
   }
-
 
 }

@@ -1,0 +1,8 @@
+div {
+  text-align: center;
+  margin: 50px;
+}
+
+h2 {
+  color: #d9534f; /* Bootstrap's danger color */
+}

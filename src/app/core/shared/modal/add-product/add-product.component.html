@@ -1,0 +1,86 @@
+<div class="popup justify-content-center" style="overflow-y: auto " xmlns="http://www.w3.org/1999/html">
+  <div class="popup-content col-sm-6">
+    <!-- Your popup content goes here -->
+    <h2>Add Product</h2>
+    <form [formGroup]="form" (ngSubmit)="onAddProduct(form.value)">
+      <fieldset style="display: flex">
+        <div class="col-sm-6">
+        <input type="text" placeholder="Enter your full name" formControlName="title" required />
+        <div class="alert alert-danger" *ngIf='title.touched && title.invalid'>
+          <div *ngIf="title.errors?.required">
+            Title is required
+          </div>
+          <div *ngIf="title.errors?.minLength">
+            Title must contain at least 1 character
+          </div>
+        </div>
+        <input type="number" min="0" formControlName="price" required />
+        <div class="alert alert-danger" *ngIf='price.touched && price.invalid'>
+          <div *ngIf="price.errors?.required">
+            Price is required
+          </div>
+          <div *ngIf="price.errors?.min">
+            Price must be at least 1
+          </div>
+        </div>
+        <input type="number" formControlName="quantity" required />
+        <div class="alert alert-danger" *ngIf='quantity.touched && quantity.invalid'>
+          <div *ngIf="quantity.errors?.required">
+            Quantity is required
+          </div>
+          <div *ngIf="quantity.errors?.min">
+            Quantity must be at least 1
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-6">
+        <textarea placeholder="Enter description for product" formControlName="description"  required></textarea>
+        <div class="alert alert-danger" *ngIf='description.touched && description.invalid'>
+          <div *ngIf="description.errors?.required">
+            Description is required
+          </div>
+          <div *ngIf="description.errors?.minLength">
+            Description must contain at least 10 characters
+          </div>
+        </div>
+        <select formControlName="categoryId" class="custom-select" id="category" required >
+          <option selected disabled>Select Category</option>
+          <option *ngFor="let category of categoryList" [value]="category.id">{{category.title}}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf='categoryId.touched && categoryId.invalid'>
+          <div *ngIf="categoryId.errors?.required">
+            Category is required
+          </div>
+        </div>
+        <div class="col-sm-12" style="display: flex; margin-top: 1rem">
+
+
+
+        </div>
+        </div>
+
+      </fieldset>
+      <div class="col-sm-12">
+        <input type="file" formControlName="photo" id="imageInput" (change)="onFileSelected($event)" required>
+        <div class="alert alert-danger" *ngIf='photo.touched && photo.invalid'>
+          <div *ngIf="photo.errors?.required">
+            Photo is required
+          </div>
+        </div>
+      </div>
+      <div class="image-preview image" *ngIf="imageUrl">
+
+        <img [src]="imageUrl" style="width: 200px; height: 150px" alt="Image preview">
+        <button (click)="removeImage()" class="remove-image-button">
+          x
+        </button>
+      </div>
+      <div>
+        <button style="margin-right: 10px" class="option2" [disabled]="form.invalid">Submit</button>
+        <button (click)="closePopup()" class="option2">Close</button>
+      </div>
+    </form>
+    <!-- Add more content as needed -->
+  </div>
+</div>
+
