@@ -25,7 +25,23 @@ export class BucketService {
   }
 
   addProductToBucket(productId: string | undefined) {
-    this.http.post(`${this.apiBaseUrl}/api/v1/bucket/add/${productId}`,  this.httpOptionsForAuthenticated);
+    if (!productId) {
+      console.error("productId is undefined");
+      return;
+    }
+
+    const url = `${this.apiBaseUrl}/api/v1/bucket/add/${productId}`;
+    this.http.post(url, null, this.httpOptionsForAuthenticated)
+      .subscribe(
+        () => {
+          console.log("Product added to bucket successfully");
+        },
+        (error) => {
+          console.error("Error adding product to bucket", error);
+          // Handle error, if needed
+        }
+      );
+
   }
 
   deleteProductFromBucket(productId: string | any) {

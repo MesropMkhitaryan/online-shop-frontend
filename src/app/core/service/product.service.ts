@@ -18,19 +18,6 @@ export class ProductService {
   constructor(private http: HttpClient, private tokenService: TokenService) {
   }
 
-
-  public httpOptionsForNonAuthenticated = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
-  public httpOptionsImgUpload = {
-    headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.tokenService.getToken()}`,
-    })
-  };
-
   public httpOptionsForAuthenticated = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
@@ -46,7 +33,7 @@ export class ProductService {
   }
 
   public productList(): Observable<ProductResponse[]> {
-    return this.http.get<any>(`${this.apiBaseUrl}/api/v1/product/list`, this.httpOptionsForNonAuthenticated);
+    return this.http.get<any>(`${this.apiBaseUrl}/api/v1/product/list`);
   }
 
   getImage(fileName: string | any) {
@@ -65,7 +52,7 @@ export class ProductService {
   uploadImage(productId: string, file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('photo', file, file.name);
-    return this.http.post(`${this.apiBaseUrl}/api/v1/product/upload/${productId}`, formData, this.httpOptionsImgUpload);
+    return this.http.post(`${this.apiBaseUrl}/api/v1/product/upload/${productId}`, formData, this.httpOptionsForAuthenticated);
   }
 
   deleteProduct(productId: string | any) {

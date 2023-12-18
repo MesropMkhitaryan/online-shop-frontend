@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../model/user";
 import {AuthenticationRequest} from "../model/request/authenticationRequest";
 import {AuthenticationResponse} from "../model/authenticationResponse";
-import {TokenService} from "./token.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +21,10 @@ export class UserService {
   };
 
   public register(user: User) {
-    return this.http.post<any>(`${this.apiBaseUrl}/api/v1/auth/register`, user);
+    return this.http.post<any>(`${this.apiBaseUrl}/api/v1/auth/register`, user, this.httpOptions);
   }
 
   public login(authenticationRequest: AuthenticationRequest){
-    return this.http.post<AuthenticationResponse>(`${this.apiBaseUrl}/api/v1/auth/authenticate`, authenticationRequest)
+    return this.http.post<AuthenticationResponse>(`${this.apiBaseUrl}/api/v1/auth/authenticate`, authenticationRequest, this.httpOptions)
   }
 }
