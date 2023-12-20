@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {UserService} from "../../../service/user.service";
+import {AuthService} from "../../../service/auth.service";
+import {Subject, Subscription, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -10,20 +12,26 @@ import {UserService} from "../../../service/user.service";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   showLinks : boolean = true
-  constructor(private userService: UserService, private route: Router) {
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  constructor(private authService: AuthService, private route: Router) {
   }
   ngOnInit(): void {
-    if (localStorage.length !== 0){
-      this.showLinks = localStorage.getItem('token') === null
-    }
+    this.authService.isAuthenticated$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(isAuthenticated => {
+        this.showLinks = isAuthenticated;
+      });
   }
 
-  onLogout() {
-    if (localStorage.getItem('token') !== null){
-      localStorage.removeItem('token')
-      window.location.reload();
-    }
+  onLogout(){
+    this.authService.logout()
+    this.showLinks = false
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

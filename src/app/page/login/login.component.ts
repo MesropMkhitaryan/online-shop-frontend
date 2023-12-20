@@ -7,12 +7,13 @@ import {AuthenticationResponse} from "../../core/model/authenticationResponse";
 import {Router} from "@angular/router";
 import {FooterComponent} from "../../core/shared/layout/footer/footer.component";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "../../core/service/auth.service";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent, ReactiveFormsModule],
-  providers:[UserService],
+  providers:[UserService,AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -26,13 +27,14 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private authService: AuthService) {
   }
 
   onLogin(value: any) {
      return this.userService.login(value).subscribe((response: AuthenticationResponse) => {
         const token = response.token;
         localStorage.setItem("token", token);
+        this.authService.updateAuthenticationStatus()
         console.log("user is logged in")
         this.router.navigate([''])
       },

@@ -1,4 +1,14 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeaderComponent} from "../../core/shared/layout/header/header.component";
 import {FooterComponent} from "../../core/shared/layout/footer/footer.component";
@@ -6,9 +16,9 @@ import {BucketService} from "../../core/service/bucket.service";
 import {Bucket} from "../../core/model/bucket";
 import {UserService} from "../../core/service/user.service";
 import {ProductsComponent} from "../../core/shared/components/products/products.component";
-import {ProductResponse} from "../../core/model/productResponse";
 import {OrderService} from "../../core/service/order.service";
 import {FormsModule} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-bucket',
@@ -18,9 +28,8 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './bucket.component.html',
   styleUrl: './bucket.component.css'
 })
-export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   bucket: Bucket | any;
-  products: ProductResponse[] | any
   productIds: string[] = []
 
   imageUrl: any = `http://localhost:8082/api/v1/product/getProductPic/`
@@ -28,14 +37,15 @@ export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked 
   priceSum: number | any
   @ViewChildren('priceInputRef') xElements: QueryList<ElementRef> | any;
   checkboxStates: boolean[] = [];
+  bucketSubscription: Subscription | any;
 
-  constructor(private bucketService: BucketService, private orderService: OrderService) {
+
+  constructor(private bucketService: BucketService, private orderService: OrderService,private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.bucketService.getBucket().subscribe(response => {
       this.bucket = response
-      this.products = this.bucket.product
       this.countSum()
     })
     localStorage.setItem("moduleValues", JSON.stringify(this.productIds));
@@ -43,23 +53,22 @@ export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked 
 
   ngAfterViewChecked() {
     this.countSum()
-    this.bucketService.getBucket()
-    for (const product of this.products) {
-      this.disableButtons(product)
-    }
+    // for (const product of this.products) {
+    //   this.disableButtons(product)
+    // }
   }
 
   ngAfterViewInit(): void {
-    for (const product of this.products) {
-      this.disableButtons(product)
-    }
+    // for (const product of this.products) {
+    //   this.disableButtons(product)
+    // }
   }
 
   getProductQuantities(): { [productId: string]: number } {
     const productQuantities: { [productId: string]: number } = {};
 
     // @ts-ignore
-    this.products.forEach(product => {
+    this.bucket.product.forEach(product => {
       if (this.checkboxStates[product.id]) {
         const quantityInput: HTMLInputElement | any = document.getElementById("quantity-input-" + product.id);
         const currentValue = parseInt(quantityInput.value, 10) || 0;
@@ -110,11 +119,16 @@ export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked 
     this.priceSum = totalSum
   }
 
+  loadBucketData() {
+    this.bucketSubscription = this.bucketService.getBucket().subscribe(response => {
+      this.bucket = response;
+    });
+  }
+
   onDelete(id: string | any) {
     this.bucketService.deleteProductFromBucket(id).subscribe(response => {
       this.bucketService.getBucket().subscribe(response => {
-        this.bucket = response
-        this.products = this.bucket.products
+        this.loadBucketData()
       })
     })
   }
@@ -127,10 +141,7 @@ export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked 
     }
     this.orderService.orderProduct(order).subscribe(response => {
       console.log(response)
-      this.bucketService.getBucket().subscribe(response => {
-        this.bucket = response
-        this.products = this.bucket.products
-      })
+      this.loadBucketData();
     })
   }
 
@@ -166,4 +177,12 @@ export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked 
     }
     this.countSum()
   }
+
+  ngOnDestroy() {
+    localStorage.removeItem("moduleValues")
+    if (this.bucketSubscription) {
+      this.bucketSubscription.unsubscribe();
+    }
+  }
+
 }

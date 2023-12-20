@@ -1,25 +1,25 @@
 <div class="container" style="margin-top: 2rem; margin-bottom: 2rem; display: flex">
   <div class="row col-sm-8 ml-3" style="background: #f8f8f8; border-radius: 15px;">
-    <div *ngFor="let product of products; let i = index" class="col-sm-8 my-3 " style="display: flex; margin-bottom: 2rem">
+    <div *ngFor="let item of bucket.product; let i = index" class="col-sm-8 my-3 " style="display: flex; margin-bottom: 2rem">
       <div class="checkbox-wrapper-13 mx-3">
-        <input id="c1-13-{{product.id}}" type="checkbox" (change)="addProductToLocal(product)" [(ngModel)]="checkboxStates[product.id]">
+        <input id="c1-13-{{item.id}}" type="checkbox" (change)="addProductToLocal(item)" [(ngModel)]="checkboxStates[item.id]">
       </div>
-      <img [src]="imageUrl + product.photo" style="height: 130px; width: 160px" alt="">
+      <img [src]="imageUrl + item.photo" style="height: 130px; width: 160px" alt="">
       <div class="col-md-3">
-        <h4>{{product.title}}</h4>
+        <h4>{{item.title}}</h4>
       </div>
 
       <div id="quantity-div" class="col-sm-4" style="display: flex;height: 30px; justify-content: center">
-        <button  class="btn-dark btn" id="minus-button-{{product.id}}" style="width: 28px; justify-content: center; align-items: center; display: flex; border-radius: 4px" (click)="minusQuantity(product)" >-</button>
+        <button class="btn-dark btn" id="minus-button-{{item.id}}" style="width: 28px; justify-content: center; align-items: center; display: flex; border-radius: 4px" (click)="minusQuantity(item)" >-</button>
         <input class ="mx-2" autocomplete="off" style="border: none; background: #f8f8f8; width:22px;"
-             readonly id="quantity-input-{{product.id}}"  value="1" [max]="product.quantity" >
-        <button class="btn-dark btn" id="plus-button-{{product.id}}" style="width: 28px; justify-content: center; align-items: center; display: flex; border-radius: 4px" (click)="addQuantity(product)" >+</button>
+               readonly id="quantity-input-{{item.id}}" value="1" [max]="item.quantity" >
+        <button class="btn-dark btn" id="plus-button-{{item.id}}" style="width: 28px; justify-content: center; align-items: center; display: flex; border-radius: 4px" (click)="addQuantity(item)" >+</button>
       </div>
       <div style="display: flex; flex-direction: column; margin-left: 12rem; max-width: 200px">
-        <input id="price-input-{{product.id}}" #priceInputRef class="priceInput" style="margin-left: auto;border: none; height: 31px; width: 110px;
-         background: #f8f8f8;" readonly value="{{product.price}}">
+        <input id="price-input-{{item.id}}" #priceInputRef class="priceInput" style="margin-left: auto;border: none; height: 31px; width: 110px;
+         background: #f8f8f8;" readonly value="{{item.price}}">
         <div style="max-width: 200px; margin-top: 6rem">
-          <button (click)="onDelete(product.id)" class="btn-danger btn">Delete</button>
+          <button (click)="onDelete(item.id)" class="btn-danger btn">Delete</button>
         </div>
       </div>
     </div>
