@@ -8,3 +8,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
   ],
 };
+
+export const PRODUCT_IMAGE_URL = 'http://localhost:8082/api/v1/product/getProductPic/';
+

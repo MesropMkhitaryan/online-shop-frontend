@@ -36,10 +36,6 @@ export class ProductService {
     return this.http.get<any>(`${this.apiBaseUrl}/api/v1/product/list`);
   }
 
-  getImage(fileName: string | any) {
-    return this.http.get(`${this.apiBaseUrl}/api/v1/product/getProductPic/${fileName}`, this.httpOptionsForAuthenticated);
-  }
-
   findById(productId: string){
     return this.http.get<ProductResponse>(`${this.apiBaseUrl}/api/v1/product/find/${productId}`)
   }

@@ -1,9 +1,11 @@
-import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {UserService} from "../../../service/user.service";
 import {AuthService} from "../../../service/auth.service";
 import {Subject, Subscription, takeUntil} from "rxjs";
+import {ProductPageComponent} from "../../../../page/product-page/product-page.component";
+import {ProductCardComponent} from "../../components/products/product-card.component";
 
 @Component({
   selector: 'app-header',
@@ -15,7 +17,8 @@ import {Subject, Subscription, takeUntil} from "rxjs";
 export class HeaderComponent implements OnInit, OnDestroy {
   showLinks : boolean = true
   private ngUnsubscribe: Subject<void> = new Subject<void>();
-  constructor(private authService: AuthService, private route: Router) {
+
+  constructor(private authService: AuthService) {
   }
   ngOnInit(): void {
     this.authService.isAuthenticated$
@@ -26,8 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout(){
-    this.authService.logout()
-    this.showLinks = false
+    this.authService.logout();
   }
 
   ngOnDestroy(): void {

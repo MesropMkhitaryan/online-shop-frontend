@@ -1,6 +1,5 @@
 import {
   AfterViewChecked,
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -15,7 +14,7 @@ import {FooterComponent} from "../../core/shared/layout/footer/footer.component"
 import {BucketService} from "../../core/service/bucket.service";
 import {Bucket} from "../../core/model/bucket";
 import {UserService} from "../../core/service/user.service";
-import {ProductsComponent} from "../../core/shared/components/products/products.component";
+import {ProductCardComponent} from "../../core/shared/components/products/product-card.component";
 import {OrderService} from "../../core/service/order.service";
 import {FormsModule} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -23,12 +22,12 @@ import {Subscription} from "rxjs";
 @Component({
   selector: 'app-bucket',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, ProductsComponent, FormsModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent, ProductCardComponent, FormsModule],
   providers: [BucketService, UserService, OrderService],
   templateUrl: './bucket.component.html',
   styleUrl: './bucket.component.css'
 })
-export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
+export class BucketComponent implements OnInit, AfterViewChecked, OnDestroy {
   bucket: Bucket | any;
   productIds: string[] = []
 
@@ -53,15 +52,9 @@ export class BucketComponent implements OnInit, AfterViewInit, AfterViewChecked,
 
   ngAfterViewChecked() {
     this.countSum()
-    // for (const product of this.products) {
-    //   this.disableButtons(product)
-    // }
-  }
-
-  ngAfterViewInit(): void {
-    // for (const product of this.products) {
-    //   this.disableButtons(product)
-    // }
+    for (const product of this.bucket.product) {
+      this.disableButtons(product)
+    }
   }
 
   getProductQuantities(): { [productId: string]: number } {

@@ -13,7 +13,7 @@ import {AuthService} from "../../core/service/auth.service";
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent, ReactiveFormsModule],
-  providers:[UserService,AuthService],
+  providers:[UserService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
